@@ -1,0 +1,5 @@
+*.svg
+!*.10000.svg
+*.png
+.tmp/
+.goutput*
