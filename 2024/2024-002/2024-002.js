@@ -68,9 +68,13 @@ const renderMultidotMaterial = function (material, grid, input_attrs) {
 }
 let multidot_material_1 = {
     vertex: function (uv) {
-        let x = 0.05 * Math.sin(uv[1] * 5) + 0.3 * uv[1];
-        let y = 0.1 * Math.cos(uv[0] * 4);
-        let s = uv[0] * 0.6 + 0.6;
+        let x = 0.02 * Math.sin(uv[1] * 5.9) + 0.25 * uv[1];
+        // x = Math.pow(x, 1.2 - 0.2 * uv[1]);
+        // x *= 1-0.15*uv[0];
+        x *= 1-0.15*uv[1];
+        let y = 0.07 * Math.cos(uv[0] * 4.2) * (1.0 - 0.2 * uv[1]);
+        y *= 1-0.15*uv[0];
+        let s = uv[0] * 0.4 + 0.6;
         return [x, y, s];
     },
     fragment: function (raw_uv, vertex, grid) {
@@ -83,17 +87,21 @@ let multidot_material_1 = {
         if (Math.abs(raw_uv[0] - 0.5) < 0.04 || Math.abs(raw_uv[1] - 0.5) < 0.04) { return ''; };
         const cx = (vertex[0] * grid.size[0]).toString().slice(0,6);
         const cy = (vertex[1] * grid.size[1]).toString().slice(0,6);
-        const r = (15 * vertex[2]).toString().slice(0,4);
+        const r = (12 * vertex[2]).toString().slice(0,4);
         return `<circle fill="rgb(${COLOR.join(',')})" cx="${cx}" cy="${cy}" r="${r}" />\n`
     }
 };
 SVG_CONTENTS_OVERLAY += renderMultidotMaterial(multidot_material_1, {
-    row_col: [50, 40],
-    size: [4000, 3000]
+    row_col: [70, 64],
+    size: [3400, 3200]
 }, { transform: "translate(-2000, -1500)" });
 
 
-// A4 paper, 
+
+
+
+
+// A4 paper
 const OUTPUT_SVG = `<svg viewBox="-2121 -3000 4242 6000" data-height="100vh" xmlns="http://www.w3.org/2000/svg">
 <desc>Copyright (c) 2024 Nekostein, an unincorporated game development team. All rights reserved.</desc>
 
