@@ -1,5 +1,6 @@
 *.svg
 !*.10000.svg
 *.png
+*.pdf
 .tmp/
 .goutput*

@@ -17,9 +17,6 @@ const USABLE_CONTENT_SIZE_H = CORNER_DECORATION_BORDER_CIRCLE_SKIP * 18 + 0;
 const deg2rad = function (deg) {
     return deg / 360 * (Math.PI * 2);
 };
-const uv_to_polarity = function (uv) {
-    return uv * 2 - 1;
-}
 
 
 
@@ -76,7 +73,9 @@ const renderMultidotMaterial = function (material, grid, input_attrs) {
             let vertex = material.vertex(uv);
             vertex[0] += raw_uv[0];
             vertex[1] += raw_uv[1];
-            output_string += material.fragment(raw_uv, vertex, grid);
+            if (vertex[2] > 0) {
+                output_string += material.fragment(raw_uv, vertex, grid);
+            }
         };
     };
     output_string += '</g>\n';
@@ -115,7 +114,7 @@ let multidot_material_2 = {
         let y = 0;
         let mathXY = [uv[0] - 0.5, uv[1] - 0.5];
 
-        let height_shift_UVW = Math.cos(5.5 + 9 * (uv[0] + 0.4 * uv[1]));
+        let height_shift_UVW = Math.cos(5.5 + (9 - 2.5 * uv[1]) * (uv[0] + 0.4 * uv[1]));
         let height_effeciency = 0.2 + 0.8 * uv[1] // More volatile if nearer to camera
 
         x = -0.5;
