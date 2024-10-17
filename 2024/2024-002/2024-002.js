@@ -119,7 +119,7 @@ const OUTPUT_SVG = `<svg viewBox="-2121 -3000 4242 6000" data-height="100vh" xml
 canvas size debug
 <rect fill="gray" x="-3535" y="-5000" width="7070" height="10000" />
 -->
-<rect fill="white" x="-6000" y="-6000" width="12000" height="12000" />
+<rect fill="black" x="-6000" y="-6000" width="12000" height="12000" />
 
 
 ${SVG_CONTENTS_OUTER}
