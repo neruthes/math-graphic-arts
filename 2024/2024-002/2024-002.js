@@ -23,6 +23,22 @@ const uv_to_polarity = function (uv) {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 let SVG_DEFS = '';
 let SVG_CONTENTS_OUTER = '';
 let SVG_CONTENTS_INNER = '';
@@ -66,14 +82,14 @@ const renderMultidotMaterial = function (material, grid, input_attrs) {
     output_string += '</g>\n';
     return output_string;
 }
+
+// Something like Windows 98 logo
 let multidot_material_1 = {
     vertex: function (uv) {
         let x = 0.02 * Math.sin(uv[1] * 5.9) + 0.25 * uv[1];
-        // x = Math.pow(x, 1.2 - 0.2 * uv[1]);
-        // x *= 1-0.15*uv[0];
-        x *= 1-0.15*uv[1];
+        x *= 1 - 0.15 * uv[1];
         let y = 0.07 * Math.cos(uv[0] * 4.2) * (1.0 - 0.2 * uv[1]);
-        y *= 1-0.15*uv[0];
+        y *= 1 - 0.15 * uv[0];
         let s = uv[0] * 0.4 + 0.6;
         return [x, y, s];
     },
@@ -85,25 +101,69 @@ let multidot_material_1 = {
             180
         ].map(f => Math.round(f));
         if (Math.abs(raw_uv[0] - 0.5) < 0.04 || Math.abs(raw_uv[1] - 0.5) < 0.04) { return ''; };
-        const cx = (vertex[0] * grid.size[0]).toString().slice(0,6);
-        const cy = (vertex[1] * grid.size[1]).toString().slice(0,6);
-        const r = (12 * vertex[2]).toString().slice(0,4);
+        const cx = (vertex[0] * grid.size[0]).toString().slice(0, 6);
+        const cy = (vertex[1] * grid.size[1]).toString().slice(0, 6);
+        const r = (12 * vertex[2]).toString().slice(0, 4);
         return `<circle fill="rgb(${COLOR.join(',')})" cx="${cx}" cy="${cy}" r="${r}" />\n`
     }
 };
-SVG_CONTENTS_OVERLAY += renderMultidotMaterial(multidot_material_1, {
-    row_col: [70, 64],
-    size: [3000, 2700]
-}, { transform: "translate(-1800, -1500)" });
+
+// FLoating weave field
+let multidot_material_2 = {
+    vertex: function (uv) {
+        let x = 0;
+        let y = 0;
+        let mathXY = [uv[0] - 0.5, uv[1] - 0.5];
+
+        let height_shift_UVW = Math.cos(5.5 + 9 * (uv[0] + 0.4 * uv[1]));
+        let height_effeciency = 0.2 + 0.8 * uv[1] // More volatile if nearer to camera
+
+        x = -0.5;
+        mathXY[1] = Math.pow(uv[1], 1.5) - 0.25;
+        mathXY[0] *= 0.9 + 0.9 * mathXY[1];
+        // Finalize
+        y = mathXY[1] - uv[1];
+        x = mathXY[0] - uv[0];
+        y += 0.3 * height_effeciency * height_shift_UVW; // Apply height shifting wave
+        // Special extra shifting
+        x += 0.05;
+        y += -0.1;
+        let s = 1;
+        s = 0.0 + 1.0 * (Math.pow(1 + uv[1], 2.3) - 1) - 0.5 * height_shift_UVW;
+        return [x, y, s];
+    },
+    fragment: function (raw_uv, vertex, grid) {
+        // vertex = vec3(vec2 uv_offset, float signed_scale)
+        if (vertex[2] <= 0) { return; };
+        let COLOR = [
+            244,
+            100 + 122 * raw_uv[0],
+            250 - 150 * raw_uv[1],
+        ].map(f => Math.round(f));
+        // const opacity = 0.1 + raw_uv[0] * 0.9;
+        let opacity = vertex[2]/4;
+        const cx = (vertex[0] * grid.size[0]).toString().replace(/\.(\d{2}).+$/, '.$1');
+        const cy = (vertex[1] * grid.size[1]).toString().replace(/\.(\d{2}).+$/, '.$1');
+        const r = (12 * vertex[2]).toString().slice(0, 4);
+        // if (opacity < 0.05) { return; };
+        return `<circle fill="rgb(${COLOR.join(',')})" cx="${cx}" cy="${cy}" r="${r}" opacity="${opacity}" />\n`
+    }
+};
+
+
+SVG_CONTENTS_OUTER += renderMultidotMaterial(multidot_material_2, {
+    row_col: [44, 35],
+    size: [6000, 2000]
+}, { transform: "translate(0, 0)" });
 
 
 
 
 
 
-// A4 paper
-const OUTPUT_SVG = `<svg viewBox="-2121 -3000 4242 6000" data-height="100vh" xmlns="http://www.w3.org/2000/svg">
-<desc>Copyright (c) 2024 Nekostein, an unincorporated game development team. All rights reserved.</desc>
+// Square canvas
+const OUTPUT_SVG = `<svg viewBox="-3000 -3000 6000 6000" xmlns="http://www.w3.org/2000/svg">
+<desc>Copyright (c) 2024 Neruthes. All rights reserved.</desc>
 
 <defs>
     <mask id="contentsizebox-mask">
@@ -119,13 +179,13 @@ const OUTPUT_SVG = `<svg viewBox="-2121 -3000 4242 6000" data-height="100vh" xml
 canvas size debug
 <rect fill="gray" x="-3535" y="-5000" width="7070" height="10000" />
 -->
-<rect fill="white" x="-6000" y="-6000" width="12000" height="12000" />
+<rect fill="black" x="-6000" y="-6000" width="12000" height="12000" />
 
 
 ${SVG_CONTENTS_OUTER}
 <rect x="-${(USABLE_CONTENT_SIZE_W + 111.00) / 2}" y="-${(USABLE_CONTENT_SIZE_H + 111.00) / 2}"
     width="${(USABLE_CONTENT_SIZE_W + 111.00)}" height="${(USABLE_CONTENT_SIZE_H + 111.00)}"
-    rx="0" ry="0" stroke="none" stroke-width="17" fill="white" opacity="1" />
+    rx="0" ry="0" stroke="none" stroke-width="17" fill="white" opacity="0" />
 
 <g mask="url(#contentsizebox-mask)">
     ${SVG_CONTENTS_INNER}

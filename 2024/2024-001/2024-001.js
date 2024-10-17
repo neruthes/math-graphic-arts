@@ -105,7 +105,7 @@ if (PROG > 33) {
 
 // A4 paper, 
 const OUTPUT_SVG = `<svg viewBox="-3535 -5000 7070 10000" data-height="100vh" xmlns="http://www.w3.org/2000/svg">
-<desc>Copyright (c) 2024 Nekostein, an unincorporated game development team. All rights reserved.</desc>
+<desc>Copyright (c) 2024 Neruthes. All rights reserved.</desc>
 
 <defs>
     <g id="main-text-group">
