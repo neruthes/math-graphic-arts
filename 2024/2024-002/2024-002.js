@@ -93,8 +93,8 @@ let multidot_material_1 = {
 };
 SVG_CONTENTS_OVERLAY += renderMultidotMaterial(multidot_material_1, {
     row_col: [70, 64],
-    size: [3400, 3200]
-}, { transform: "translate(-2000, -1500)" });
+    size: [3000, 2700]
+}, { transform: "translate(-1800, -1500)" });
 
 
 
@@ -119,7 +119,7 @@ const OUTPUT_SVG = `<svg viewBox="-2121 -3000 4242 6000" data-height="100vh" xml
 canvas size debug
 <rect fill="gray" x="-3535" y="-5000" width="7070" height="10000" />
 -->
-<rect fill="black" x="-6000" y="-6000" width="12000" height="12000" />
+<rect fill="white" x="-6000" y="-6000" width="12000" height="12000" />
 
 
 ${SVG_CONTENTS_OUTER}
