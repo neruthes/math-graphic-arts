@@ -32,7 +32,7 @@ let SVG_CONTENTS_OVERLAY = '';
 // Make new entropy
 // let ENTROPY_POOL = [];
 // for (let i = 0; i <= 500; i ++) {
-//     entropy_pool.push(Math.random());
+//     ENTROPY_POOL.push(Math.random());
 // };
 // fs.writeFileSync(`2024/2024-001/2024-001.entropy_pool.json`, JSON.stringify(ENTROPY_POOL));
 
