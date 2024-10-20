@@ -43,15 +43,9 @@ let SVG_CONTENTS_INNER = '';
 let SVG_CONTENTS_OVERLAY = '';
 
 
-// Make new entropy
-// let ENTROPY_POOL = [];
-// for (let i = 0; i <= 500; i ++) {
-//     ENTROPY_POOL.push(Math.random());
-// };
-// fs.writeFileSync(`2024/2024-002/2024-002.entropy_pool.json`, JSON.stringify(ENTROPY_POOL));
 
-// Get saved entropy
-let ENTROPY_POOL = JSON.parse(fs.readFileSync(`2024/2024-002/2024-002.entropy_pool.json`).toString());
+
+
 
 
 
@@ -63,36 +57,35 @@ let multidot_material_2 = {
         let x = 0;
         let y = 0;
         let mathXY = [uv[0] - 0.5, uv[1] - 0.5];
+        let camera_xyz_pre = [...mathXY, 0];
+        camera_xyz_pre[2] += 0.003 * Math.cos(125 * camera_xyz_pre[0]);
+        let camera_xyz = lib3d.rotate_x(camera_xyz_pre, deg2rad(-89));
+        camera_xyz[2] += 4;
+        const plane_xy = lib3d.camera_xyz_to_plane_xy(camera_xyz, { focal: 0.8, fov: 90 })
+        // console.log(`plane_xy`, plane_xy);
+        x = plane_xy.plane_xy[0] - mathXY[0];
+        y = plane_xy.plane_xy[1] - mathXY[1];
+        // let s = 1;
+        let s = 5.2 - camera_xyz[2];
 
-        let height_shift_UVW = Math.cos(5.5 + (9 - 2.5 * uv[1]) * (uv[0] + 0.4 * uv[1]));
-        let height_effeciency = 0.2 + 0.8 * uv[1] // More volatile if nearer to camera
-
-        x = -0.5;
-        mathXY[1] = Math.pow(uv[1], 1.5) - 0.25;
-        mathXY[0] *= 0.9 + 0.9 * mathXY[1];
-        // Finalize
-        y = mathXY[1] - uv[1];
-        x = mathXY[0] - uv[0];
-        y += 0.3 * height_effeciency * height_shift_UVW; // Apply height shifting wave
-        // Special extra shifting
-        x += 0.05;
-        y += -0.1;
-        let s = 1;
-        s = 0.0 + 1.0 * (Math.pow(1 + uv[1], 2.3) - 1) - 0.5 * height_shift_UVW;
-        return [x, y, s];
+        const return_value = [x, y, s];
+        // console.log(`return_value`, return_value);
+        return return_value;
     },
     fragment: function (raw_uv, vertex, grid) {
         // vertex = vec3(vec2 uv_offset, float signed_scale)
         if (vertex[2] <= 0) { return; };
+        // console.log(`vertex`, vertex);
         let COLOR = [
             244,
             100 + 122 * raw_uv[0],
             250 - 150 * raw_uv[1],
         ].map(f => Math.round(f));
         // const opacity = 0.1 + raw_uv[0] * 0.9;
-        let opacity = vertex[2]/4;
-        const cx = (vertex[0] * grid.size[0]).toString().replace(/\.(\d{2}).+$/, '.$1');
-        const cy = (vertex[1] * grid.size[1]).toString().replace(/\.(\d{2}).+$/, '.$1');
+        let opacity = vertex[2] / 1.3 - 0.2;
+        // let opacity = 1;
+        const cx = (vertex[0] * grid.size[0]).toString();
+        const cy = (vertex[1] * grid.size[1]).toString();
         const r = (12 * vertex[2]).toString().slice(0, 4);
         // if (opacity < 0.05) { return; };
         return `<circle fill="rgb(${COLOR.join(',')})" cx="${cx}" cy="${cy}" r="${r}" opacity="${opacity}" />\n`
@@ -101,10 +94,10 @@ let multidot_material_2 = {
 
 
 SVG_CONTENTS_OUTER += lib3d.renderMultidotMaterial(multidot_material_2, {
-    omit_cols: [0, 0],
-    row_col: [44, 35],
-    size: [6000, 2000]
-}, { transform: "translate(0, 0)" });
+    omit_cols: [260, 260],
+    row_col: [640, 30],
+    size: [266000, 266000]
+}, { transform: "translate(-133000, -133000)" });
 
 
 
@@ -157,8 +150,8 @@ gradient debug
 
 
 
-fs.writeFileSync(`2024/2024-002/svgout/${PREF}.${PROG}.svg`, OUTPUT_SVG);
+fs.writeFileSync(`2024/2024-003/svgout/${PREF}.${PROG}.svg`, OUTPUT_SVG);
 
 
 
-// node 2024/2024-002/2024-002.js
+// node 2024/2024-003/2024-003.js
