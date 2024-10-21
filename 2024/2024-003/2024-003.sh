@@ -4,7 +4,7 @@ source utils/shlib.sh
 
 
 
-for i in {0..1} 10000; do
+for i in 10000 {0..1}; do
     PROG=$i node 2024/2024-003/2024-003.js
 done
 

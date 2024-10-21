@@ -58,15 +58,21 @@ let multidot_material_2 = {
         let y = 0;
         let mathXY = [uv[0] - 0.5, uv[1] - 0.5];
         let camera_xyz_pre = [...mathXY, 0];
-        camera_xyz_pre[2] += 0.003 * Math.cos(125 * camera_xyz_pre[0]);
-        let camera_xyz = lib3d.rotate_x(camera_xyz_pre, deg2rad(-89));
+        let aptitude = 0.0015 * (1.0 + 1.95 * (0.1 + camera_xyz_pre[1]));
+        aptitude = aptitude * (3 - 30.0 * Math.abs(mathXY[0]));
+        let frequency = 160 * (0.8 - 0.15 * camera_xyz_pre[1]);
+        camera_xyz_pre[2] += aptitude * Math.cos(0.0 + frequency * camera_xyz_pre[0]);
+        let camera_xyz = camera_xyz_pre;
+        camera_xyz = lib3d.rotate_x(camera_xyz, deg2rad(-88));
+        camera_xyz = lib3d.rotate_y(camera_xyz, deg2rad(-0.6));
         camera_xyz[2] += 4;
-        const plane_xy = lib3d.camera_xyz_to_plane_xy(camera_xyz, { focal: 0.8, fov: 90 })
+        const plane_xy = lib3d.camera_xyz_to_plane_xy(camera_xyz, { focal: 0.75, fov: 90 })
         // console.log(`plane_xy`, plane_xy);
         x = plane_xy.plane_xy[0] - mathXY[0];
         y = plane_xy.plane_xy[1] - mathXY[1];
         // let s = 1;
         let s = 5.2 - camera_xyz[2];
+        s = Math.pow(s, 1.25);
 
         const return_value = [x, y, s];
         // console.log(`return_value`, return_value);
@@ -82,7 +88,7 @@ let multidot_material_2 = {
             250 - 150 * raw_uv[1],
         ].map(f => Math.round(f));
         // const opacity = 0.1 + raw_uv[0] * 0.9;
-        let opacity = vertex[2] / 1.3 - 0.2;
+        let opacity = Math.max(0, vertex[2] / 1.3 - 0.3);
         // let opacity = 1;
         const cx = (vertex[0] * grid.size[0]).toString();
         const cy = (vertex[1] * grid.size[1]).toString();
@@ -94,7 +100,7 @@ let multidot_material_2 = {
 
 
 SVG_CONTENTS_OUTER += lib3d.renderMultidotMaterial(multidot_material_2, {
-    omit_cols: [260, 260],
+    omit_cols: [240, 240],
     row_col: [640, 30],
     size: [266000, 266000]
 }, { transform: "translate(-133000, -133000)" });
@@ -154,4 +160,7 @@ fs.writeFileSync(`2024/2024-003/svgout/${PREF}.${PROG}.svg`, OUTPUT_SVG);
 
 
 
-// node 2024/2024-003/2024-003.js
+/*
+node 2024/2024-003/2024-003.js
+sh 2024/2024-003/2024-003.sh
+*/

@@ -63,17 +63,29 @@ function matrix_multiply(a, b) {
     }
     return m;
 }
+
 const rotate_x = function (xyz, theta) {
+    // https://en.wikipedia.org/wiki/Rotation_matrix
     const mat33 = [
         [1, 0, 0],
         [0, Math.cos(theta), - Math.sin(theta)],
         [0, Math.sin(theta), Math.cos(theta)]
     ];
-    const result = matrix_multiply(mat33, [[xyz[0]], [xyz[1]], [xyz[2]]]);
-    // console.log(`rotate_x result`, result);
-    return [result[0][0], result[1][0], result[2][0]];
+    const result = matrix_multiply(mat33, xyz.map(a=>[a]));
+    return result.map(x => x[0]);
+}
+
+const rotate_y = function (xyz, theta) {
+    // https://en.wikipedia.org/wiki/Rotation_matrix
+    const mat33 = [
+        [Math.cos(theta), 0, Math.sin(theta)],
+        [0, 1, 0],
+        [-Math.sin(theta), 0, Math.cos(theta)]
+    ];
+    const result = matrix_multiply(mat33, xyz.map(a => [a]));
+    return result.map(x => x[0]);
 }
 
 
 
-module.exports = { renderMultidotMaterial, rotate_x, matrix_multiply, camera_xyz_to_plane_xy };
+module.exports = { renderMultidotMaterial, rotate_x, rotate_y, matrix_multiply, camera_xyz_to_plane_xy };
