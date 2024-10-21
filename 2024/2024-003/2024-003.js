@@ -110,8 +110,8 @@ SVG_CONTENTS_OUTER += lib3d.renderMultidotMaterial(multidot_material_2, {
 
 
 
-// Square canvas
-const OUTPUT_SVG = `<svg viewBox="-3000 -3000 6000 6000" xmlns="http://www.w3.org/2000/svg">
+// Wide canvas
+const OUTPUT_SVG = `<svg viewBox="-6000 -3000 12000 6000" xmlns="http://www.w3.org/2000/svg">
 <desc>Copyright (c) 2024 Neruthes. All rights reserved.</desc>
 
 <defs>
