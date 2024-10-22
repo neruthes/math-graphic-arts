@@ -1,6 +1,7 @@
-*.svg
-!*.10000.svg
+*/*/svgout/*.svg
+!Base.10000.svg
 *.png
 *.pdf
+
 .tmp/
 .goutput*

@@ -1,0 +1,6 @@
+{
+    "type":"commonjs",
+  "dependencies": {
+    "jimp": "^1.6.0"
+  }
+}

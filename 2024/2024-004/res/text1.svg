@@ -1,0 +1,21 @@
+<svg viewBox="-2500 -2500 5000 5000" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+        <style>
+            text {
+                /* text-shadow: white 0 3px 25px; */
+            }
+        </style>
+    </defs>
+    <rect fill="black" x="-2500" y="-2500" width="5000" height="5000" />
+    <!-- <text fill="white" font-family="Inter" font-weight="700" font-size="444" text-anchor="middle" x="0" y="-500" >2024-004</text> -->
+    <text fill="white" font-family="Inter" font-weight="700" font-size="1200" text-anchor="middle" x="0" y="0" >TEST</text>
+    <!-- <text fill="white" font-family="Inter" font-weight="700" font-size="444" text-anchor="middle" x="0" y="500" >HELLO WORLD</text> -->
+</svg>
+
+<!--
+This file will be used as distortion field
+
+Build command:
+rsvg-convert 2024/2024-004/res/text1.svg -o 2024/2024-004/res/text1.png
+magick 2024/2024-004/res/text1.png -blur 50x50 2024/2024-004/res/text1-blur.png
+-->
