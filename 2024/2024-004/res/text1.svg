@@ -7,9 +7,9 @@
         </style>
     </defs>
     <rect fill="black" x="-2500" y="-2500" width="5000" height="5000" />
-    <!-- <text fill="white" font-family="Inter" font-weight="700" font-size="444" text-anchor="middle" x="0" y="-500" >2024-004</text> -->
-    <text fill="white" font-family="Inter" font-weight="700" font-size="1200" text-anchor="middle" x="0" y="0" >TEST</text>
-    <!-- <text fill="white" font-family="Inter" font-weight="700" font-size="444" text-anchor="middle" x="0" y="500" >HELLO WORLD</text> -->
+    <!-- <text fill="white" font-family="Inter" font-weight="700" font-size="1200" text-anchor="middle" x="0" y="-1000" >2024-004</text> -->
+    <text fill="white" font-family="Inter" font-weight="700" font-size="1000" text-anchor="middle" x="0" y="0" >TEST</text>
+    <text fill="white" font-family="Inter" font-weight="700" font-size="500" text-anchor="middle" x="0" y="700" >HELLO WORLD</text>
 </svg>
 
 <!--

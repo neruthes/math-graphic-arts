@@ -3,7 +3,7 @@
 source utils/shlib.sh
 
 rsvg-convert 2024/2024-004/res/text1.svg -o 2024/2024-004/res/text1.png
-magick 2024/2024-004/res/text1.png -blur 50x50 2024/2024-004/res/text1-blur.png
+magick 2024/2024-004/res/text1.png -blur 22x22 2024/2024-004/res/text1-blur.png
 
 
 
