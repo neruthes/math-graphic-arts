@@ -12,6 +12,8 @@
 <img src="./2024/2024-003/svgout/Base.10000.svg" width="45%" />
 
 <img src="./2024/2024-004/svgout/Base.10000.svg" width="45%" />
+<!-- <img src="./2024/2024-005/svgout/Base.10000.svg" width="45%" /> -->
+<img src="./2024/2024-006/svgout/Base.10000.svg" width="45%" />
 
 
 

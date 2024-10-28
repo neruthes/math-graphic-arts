@@ -24,6 +24,9 @@
     const deg2rad = function (deg) {
         return deg / 360 * (Math.PI * 2);
     };
+    const reduce_precision_f = function (value_f) {
+        return (Math.round(value_f * 100) / 100).toString().replace(/\.\d\d(\d+)/, '');
+    }
 
 
 
@@ -50,9 +53,7 @@
 
 
 
-    const reduce_precision_f = function (value_f) {
-        return (Math.round(value_f * 100) / 100).toString().replace(/\.\d\d(\d+)/, '');
-    }
+    
 
     const polar_to_cartesian = function (deg, vertexDistance) {
         const theta_rad = deg / 360 * Math.PI * 2;
